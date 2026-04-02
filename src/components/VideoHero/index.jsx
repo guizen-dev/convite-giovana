@@ -10,6 +10,7 @@ export default function VideoHero() {
   const [showSecondImage, setShowSecondImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const audioRef = useRef(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
   
   useEffect(() => {
     if (showSecondImage && audioRef.current) {
@@ -19,6 +20,8 @@ export default function VideoHero() {
       });
     }
   }, [showSecondImage]);
+
+  
 
   const handleClick = () => {
     if (!isPlaying) {
@@ -61,6 +64,8 @@ export default function VideoHero() {
           src="/fotos/background_tem_certeza.jpg"
           className={`media-full-foto ${transitioning ? "fade-out" : ""}`}
           onClick={handleNextClick}
+          onLoad={() => setImgLoaded(true)}
+          style={{ opacity: imgLoaded ? 1 : 0 }}
           alt="tela seguinte"
         />
       )}
