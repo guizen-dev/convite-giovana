@@ -21,15 +21,15 @@ export default function VideoHero() {
     }
   }, [showSecondImage]);
 
-  
-
   const handleClick = () => {
     if (!isPlaying) {
-      videoRef.current.play();
+      videoRef.current.play().catch(() => {});
+      if (audioRef.current) {
+        audioRef.current.play().catch(() => {});
+      }
       setIsPlaying(true);
     }
   };
-
   const handleVideoEnd = () => {
     setShowNextScreen(true);
   };
@@ -50,8 +50,9 @@ export default function VideoHero() {
         <video
           ref={videoRef}
           className="media-full"
-          src="/videos/inicio.mp4"
+          src="/videos/inicio_1.mp4"
           playsInline
+          webkit-playsinline="true"
           preload="auto"
           onClick={handleClick}
           onEnded={handleVideoEnd}
