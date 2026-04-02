@@ -50,7 +50,7 @@ export default function VideoHero() {
         <video
           ref={videoRef}
           className="media-full"
-          src="/videos/inicio_1.mp4"
+          src="/videos/inicio.mp4"
           playsInline
           webkit-playsinline="true"
           preload="auto"
