@@ -1,0 +1,194 @@
+/* BASE */
+.media-full {
+  height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: pointer;
+}
+
+/* PRIMEIRA IMAGEM */
+.inicio {
+  height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.media-full-foto {
+  height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+/* CONTAINER ENVELOPE */
+.container_envelope {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100vh;
+  width: 100vw;
+
+  position: relative; /* 🔥 ESSENCIAL */
+
+  opacity: 0;
+}
+
+/* FADE OUT */
+.fade-out {
+  opacity: 0;
+}
+
+/* FADE IN */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* OVERLAY BRANCO */
+.white-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: white;
+  z-index: 9999;
+
+  animation: whiteFlash 0.5s ease forwards;
+}
+
+@keyframes whiteFlash {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+.menu {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%); /* centraliza horizontal */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  max-width: 500px;
+
+  padding: 0;
+  list-style: none;
+
+  z-index: 10; /* garante ficar acima da imagem */
+}
+
+.menu li {
+  flex: 1;
+
+}
+
+.menu a {
+  display: flex;
+  flex-direction: column;  /* ícone em cima, texto embaixo */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.icons {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+  width: 72px;
+  height: 72px;
+  transition: filter 0.2s ease;
+}
+
+.menu a:hover .icons {
+  filter: brightness(0.7);
+}
+
+.frase {
+  color: white;          /* texto branco */
+  font-size: 12px;       /* tamanho 10px */
+  line-height: 1.2;
+  text-align: center;
+
+  display: flex;         /* 🔥 alinhamento vertical */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 99999;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+
+  max-width: 80%;
+  text-align: center;
+
+  /* font-size: 26px; */
+
+  animation: pop 0.2s ease;
+}
+
+.modal-content p {
+  color: black;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
