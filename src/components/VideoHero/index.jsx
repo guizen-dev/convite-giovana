@@ -47,16 +47,21 @@ export default function VideoHero() {
     <>
       {/* VÍDEO */}
       {!showNextScreen && (
-        <video
-          ref={videoRef}
-          className="media-full"
-          src="/videos/inicio-ok.mp4"
-          playsInline
-          webkit-playsinline="true"
-          preload="auto"
-          onClick={handleClick}
-          onEnded={handleVideoEnd}
-        />
+        // <video
+        //   ref={videoRef}
+        //   className="media-full"
+        //   src="/videos/inicio-ok.mp4"
+        //   playsInline
+        //   webkit-playsinline="true"
+        //   preload="auto"
+        //   onClick={handleClick}
+        //   onEnded={handleVideoEnd}
+        // />
+        <div style={{ backgroundColor: "yellow"}}>
+          <p>
+            Teste
+          </p>
+        </div>
       )}
 
       {/* PRIMEIRA IMAGEM */}
