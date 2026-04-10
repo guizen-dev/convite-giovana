@@ -1,6 +1,6 @@
 /* BASE */
 .media-full {
-  /* height: 100vh; */
+  max-height: 100dvh;
   width: auto;
   max-width: 100%;
   object-fit: contain;
