@@ -87,13 +87,15 @@
 
 .menu {
   position: absolute;
-  bottom: 40px;
+  bottom: 60px;
   left: 50%;
-  transform: translateX(-50%); /* centraliza horizontal */
+  transform: translateX(-50%);
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  gap: 25%;
 
   width: 100%;
   max-width: 500px;
@@ -101,11 +103,11 @@
   padding: 0;
   list-style: none;
 
-  z-index: 10; /* garante ficar acima da imagem */
+  z-index: 10;
 }
 
 .menu li {
-  flex: 1;
+  flex: 0;
 
 }
 

@@ -194,7 +194,7 @@ export default function VideoHero() {
               </a>
             </li> */}
 
-            <li>
+            {/* <li>
               <a
                 href="#"
                 onClick={(e) => {
@@ -205,7 +205,7 @@ export default function VideoHero() {
                 <img src="/fotos/vestimenta.svg" className="icons" />
                 <p className="frase">Informações <br /> vestimenta</p>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}
