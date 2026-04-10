@@ -11,10 +11,46 @@ export default function VideoHero() {
   const [showModal, setShowModal] = useState(false);
   const audioRef = useRef(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    const originalLog = console.log;
+    const originalError = console.error;
+
+    console.log = (...args) => {
+      setLogs((prev) => [...prev, "LOG: " + args.join(" ")]);
+      originalLog(...args);
+    };
+
+    console.error = (...args) => {
+      setLogs((prev) => [...prev, "ERROR: " + args.join(" ")]);
+      originalError(...args);
+    };
+
+    window.onerror = (msg, url, line, col, error) => {
+      setLogs((prev) => [
+        ...prev,
+        `ONERROR: ${msg} (${line}:${col})`,
+      ]);
+    };
+
+    window.onunhandledrejection = (event) => {
+      setLogs((prev) => [
+        ...prev,
+        "PROMISE ERROR: " + event.reason,
+      ]);
+    };
+
+    return () => {
+      console.log = originalLog;
+      console.error = originalError;
+    };
+  }, []);
   
   useEffect(() => {
     if (showSecondImage && audioRef.current) {
-      audioRef.current.volume = 0.8; // 🔊 80% do volume
+      audioRef.current.volume = 0.8;
       audioRef.current.play().catch(() => {
         console.log("Autoplay bloqueado");
       });
@@ -47,23 +83,30 @@ export default function VideoHero() {
     <>
       {/* VÍDEO */}
       {!showNextScreen && (
-        // <video
-        //   ref={videoRef}
-        //   className="media-full"
-        //   src="/videos/inicio-ok.mp4"
-        //   playsInline
-        //   webkit-playsinline="true"
-        //   preload="auto"
-        //   onClick={handleClick}
-        //   onEnded={handleVideoEnd}
-        // />
-        <div style={{ backgroundColor: "yellow"}}>
-          <p>
-            Teste
-          </p>
-        </div>
-      )}
+        <>
 
+          <div className="debug-console">
+              {/* {logs.map((log, index) => ( */}
+                {/* // <p key={index}>{log}</p> */}
+                <p style={{fontSize: 15}}>
+                  {logs}
+                </p>
+              {/* // ))} */}
+          </div>  
+          <video
+            ref={videoRef}
+            className="media-full"
+            src="/videos/inicio-ok.mp4"
+            playsInline
+            webkit-playsinline="true"
+            preload="auto"
+            onClick={handleClick}
+            onEnded={handleVideoEnd}
+          />
+
+          
+        </>
+      )}
       {/* PRIMEIRA IMAGEM */}
       {showNextScreen && !showSecondImage && (
         <img
