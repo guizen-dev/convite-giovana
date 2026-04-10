@@ -11,6 +11,19 @@ export default function VideoHero() {
   const [showModal, setShowModal] = useState(false);
   const audioRef = useRef(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  const handleStart = () => {
+    setStarted(true);
+
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch((e) => {
+          console.error("VIDEO PLAY ERROR", e);
+        });
+      }
+    }, 50);
+  };
 
   const [logs, setLogs] = useState([]);
 
@@ -108,35 +121,27 @@ export default function VideoHero() {
       {/* VÍDEO */}
       {!showNextScreen && (
         <>
+          {!started && (
+            <img
+              src="/videos/frames/frame_00000.png"
+              className="media-full"
+              onClick={handleStart}
+              alt="start video"
+            />
+          )}
 
-          <div className="debug-console">
-              {/* {logs.map((log, index) => ( */}
-                {/* // <p key={index}>{log}</p> */}
-                <p style={{fontSize: 15}}>
-                  {logs}
-                </p>
-              {/* // ))} */}
-          </div>  
-          <video
-            ref={videoRef}
-            className="media-full"
-            src="/videos/inicio-ok.mp4"
-            playsInline
-            webkit-playsinline="true"
-            preload="auto"
-            onClick={handleClick}
-            onEnded={handleVideoEnd}
-
-            onError={(e) => console.error("VIDEO ERROR", e)}
-            onLoadStart={() => console.log("VIDEO LOAD START")}
-            onCanPlay={() => console.log("VIDEO CAN PLAY")}
-            onPlay={() => console.log("VIDEO PLAY")}
-            onStalled={() => console.warn("VIDEO STALLED")}
-            onAbort={() => console.warn("VIDEO ABORT")}
-            onSuspend={() => console.warn("VIDEO SUSPEND")}
-          />
-
-          
+          {started && (
+            <video
+              ref={videoRef}
+              className="media-full"
+              src="/videos/inicio-ok.mp4"
+              playsInline
+              webkit-playsinline="true"
+              preload="auto"
+              autoPlay
+              onEnded={handleVideoEnd}
+            />
+          )}
         </>
       )}
       {/* PRIMEIRA IMAGEM */}
