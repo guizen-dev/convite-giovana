@@ -15,36 +15,60 @@ export default function VideoHero() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    const originalLog = console.log;
-    const originalError = console.error;
+    const addLog = (msg) => {
+      setLogs((prev) => [...prev, msg]);
+    };
 
+    // console.log
+    const originalLog = console.log;
     console.log = (...args) => {
-      setLogs((prev) => [...prev, "LOG: " + args.join(" ")]);
+      addLog("LOG: " + args.map(String).join(" "));
       originalLog(...args);
     };
 
+    // console.error
+    const originalError = console.error;
     console.error = (...args) => {
-      setLogs((prev) => [...prev, "ERROR: " + args.join(" ")]);
+      addLog("ERROR: " + args.map(String).join(" "));
       originalError(...args);
     };
 
-    window.onerror = (msg, url, line, col, error) => {
-      setLogs((prev) => [
-        ...prev,
-        `ONERROR: ${msg} (${line}:${col})`,
-      ]);
+    // console.warn
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      addLog("WARN: " + args.map(String).join(" "));
+      originalWarn(...args);
     };
 
-    window.onunhandledrejection = (event) => {
-      setLogs((prev) => [
-        ...prev,
-        "PROMISE ERROR: " + event.reason,
-      ]);
-    };
+    // erros JS globais
+    window.addEventListener("error", (event) => {
+      addLog(
+        `JS ERROR: ${event.message} at ${event.filename}:${event.lineno}:${event.colno}`
+      );
+    });
+
+    // erros de recursos (img, video, script)
+    window.addEventListener(
+      "error",
+      (event) => {
+        if (event.target && event.target !== window) {
+          addLog(
+            `RESOURCE ERROR: ${event.target.src || event.target.href}`
+          );
+        }
+      },
+      true
+    );
+
+    // promises
+    window.addEventListener("unhandledrejection", (event) => {
+      addLog("PROMISE ERROR: " + event.reason);
+    });
 
     return () => {
       console.log = originalLog;
       console.error = originalError;
+      console.warn = originalWarn;
     };
   }, []);
   
@@ -102,6 +126,14 @@ export default function VideoHero() {
             preload="auto"
             onClick={handleClick}
             onEnded={handleVideoEnd}
+
+            onError={(e) => console.error("VIDEO ERROR", e)}
+            onLoadStart={() => console.log("VIDEO LOAD START")}
+            onCanPlay={() => console.log("VIDEO CAN PLAY")}
+            onPlay={() => console.log("VIDEO PLAY")}
+            onStalled={() => console.warn("VIDEO STALLED")}
+            onAbort={() => console.warn("VIDEO ABORT")}
+            onSuspend={() => console.warn("VIDEO SUSPEND")}
           />
 
           
@@ -116,6 +148,8 @@ export default function VideoHero() {
           onLoad={() => setImgLoaded(true)}
           style={{ opacity: imgLoaded ? 1 : 0 }}
           alt="tela seguinte"
+          onError={() => console.error("IMG ERROR")}
+          // onLoad={() => console.log("IMG LOADED")}
         />
       )}
 
